@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .box-warrper .box {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #979797;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .head {
+            background: #f5f5f5;
+            height: 90px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="container-fluid head d-flex justify-content-center align-items-center mb-5">
+        <h1 class="m-0" id="title">Hello</h1>
+    </header>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-5 box-warrper boxes d-flex justify-content-center gap-4">
+                        <div class="box box1">
+                            <p>Red</p>
+                        </div>
+                        <div class="box box2">
+                            <p>Blue</p>
+                        </div>
+                        <div class="box box3">
+                            <p>Green</p>
+                        </div>
+                        <div class="box box4">
+                            <p>Yellow</p>
+                        </div>
+                    </div>
+
+                    <div class="input-capture-field">
+                        <form class="text-center" id="myForm">
+                            <input name="name" placeholder="Enter your Name" required />
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const boxes = document.querySelector('.boxes');
+        const form = document.getElementById('myForm');
+        const title = document.getElementById('title');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();            // stop default submit + reload [4]
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            title.textContent = name ? `Hello ${name}` : 'Hello';
+            // do custom work here (validate, show message, send via fetch, etc.) [13]
+            console.log('Handled in JS:', name);
+        });
+
+        boxes.addEventListener('click', (event) => {
+            const box = event.target.closest('.box');
+            if (!box) return;
+
+            // Determine this box’s target color via switch
+            let targetColor = 'white';
+            switch (true) {
+                case box.classList.contains('box1'):
+                    targetColor = 'red';
+                    break;
+                case box.classList.contains('box2'):
+                    targetColor = 'blue';
+                    break;
+                case box.classList.contains('box3'):
+                    targetColor = 'green';
+                    break;
+                case box.classList.contains('box4'):
+                    targetColor = 'yellow';
+                    break;
+                default:
+                    return;
+            }
+
+            // Toggle state and apply color
+            const isOn = box.dataset.on === 'true';
+            box.dataset.on = String(!isOn);
+            box.style.backgroundColor = isOn ? 'white' : targetColor;
+        });
+    </script>
+</body>
+
+</html>
